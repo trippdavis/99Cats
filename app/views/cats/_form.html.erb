@@ -1,0 +1,54 @@
+<% if flash[:error] %>
+  <p> <%= flash[:error] %></p>
+<% end %>
+
+<form action=<%= @cat.persisted? ? cat_url(@cat) : cats_url %> method="post">
+  <% if @cat.persisted? %>
+    <input type="hidden" name="_method" value="PATCH">
+  <% end %>
+
+  <p>
+    <label>Name
+      <br>
+      <input type="text" name="cat[name]" value=<%= @cat.name %>>
+    </label>
+  </p>
+
+  <p>
+    <label>Gender
+      <br>
+      <input type="radio" name="cat[gender]" id="cat_gender_male" value="M" <%= 'checked' if @cat.gender == 'M' %>>
+      <label for="cat_gender_male">Male</label>
+
+      <input type="radio" name="cat[gender]" id="cat_gender_female" value="F" <%= 'checked' if @cat.gender == 'F' %>>
+      <label for="cat_gender_female">Female</label>
+    </label>
+  </p>
+
+  <p>
+    <label for="cat_color">Color</label>
+    <br>
+    <select name="cat[color]" id="cat_color">
+      <option></option>
+      <% %w(brown black white calico orange).each do |color| %>
+        <option value=<%= color %> <%= 'selected' if color == @cat.color %>><%= color.capitalize %></option>
+      <% end %>
+    </select>
+  </p>
+
+  <p>
+    <label>Birth Date
+      <br>
+      <input type="date" name="cat[birth_date]" value=<%= @cat.birth_date %>>
+    </label>
+  </p>
+
+  <p>
+    <label>Description
+      <br>
+      <textarea name="cat[description]" rows="10" cols = "50"><%= @cat.description %></textarea>
+    </label>
+  </p>
+
+  <input type="submit" value=<%= @cat.persisted? ? "Edit Cat" : "Create Cat" %>>
+</form>
