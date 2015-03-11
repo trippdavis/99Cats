@@ -1,5 +1,5 @@
 class Cat < ActiveRecord::Base
-  validates :birth_date, :color, :name, :gender, presence: true
+  validates :birth_date, :color, :name, :gender, :user_id, presence: true
   validates :color, inclusion: { in: %w(white orange black calico brown) }
   validates :gender, inclusion: { in: %w(M F) }
 
@@ -9,6 +9,13 @@ class Cat < ActiveRecord::Base
     foreign_key: :cat_id,
     primary_key: :id,
     dependent: :destroy
+  )
+
+  belongs_to(
+    :owner,
+    class_name: 'User',
+    foreign_key: :user_id,
+    primary_key: :id
   )
 
   def age

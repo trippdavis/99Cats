@@ -1,23 +1,35 @@
+User.create(
+  user_name: 'tripp',
+  password: 'davis'
+)
+User.create(
+  user_name: 'eddie',
+  password: 'paulet'
+)
+
 Cat.create(
   birth_date: Date.new(2005, 5, 16),
   color: 'calico',
   name: 'Mittens',
   gender: 'F',
-  description: 'Very nice cat!'
+  description: 'Very nice cat!',
+  user_id: 2
 )
 Cat.create(
   birth_date: Date.new(2010, 11, 20),
   color: 'white',
   name: 'Bob',
   gender: 'M',
-  description: 'Really chill'
+  description: 'Really chill',
+  user_id: 1
 )
 Cat.create(
   birth_date: Date.new(2001, 2, 1),
   color: 'brown',
   name: 'Grumpy',
   gender: 'M',
-  description: 'Kind of sucks'
+  description: 'Kind of sucks',
+  user_id: 1
 )
 CatRentalRequest.create(
   cat_id: 1,
