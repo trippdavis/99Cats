@@ -17,9 +17,27 @@ class CatRentalRequestsController < ApplicationController
     end
   end
 
+  def approve
+    @request = CatRentalRequest.find(cat_request_id)
+
+    @request.approve!
+    redirect_to cat_url(Cat.find(@request.cat_id))
+  end
+
+  def deny
+    @request = CatRentalRequest.find(cat_request_id)
+
+    @request.deny!
+    redirect_to cat_url(Cat.find(@request.cat_id))
+  end
+
   private
 
   def cat_request_params
     params.require(:cat_rental_request).permit(:cat_id, :start_date, :end_date)
+  end
+
+  def cat_request_id
+    params.require(:cat_rental_request).permit(:id)[:id]
   end
 end

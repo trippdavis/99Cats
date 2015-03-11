@@ -1,7 +1,7 @@
 class CatRentalRequest < ActiveRecord::Base
   validates :cat_id, :start_date, :end_date, :status, presence: true
   validates :status, inclusion: { in: %w(PENDING APPROVED DENIED) }
-  validate :overlapping_approved_requests
+  validate :no_approved_requests_may_overlap
 
   after_initialize do |rental_request|
     rental_request.status ||= 'PENDING'
@@ -14,14 +14,42 @@ class CatRentalRequest < ActiveRecord::Base
     primary_key: :id
   )
 
-  def overlapping_approved_requests
-    if (overlapping_requests.any?{ |request| request.status == 'APPROVED' }) && status == "APPROVED"
+  def pending?
+    status == 'PENDING'
+  end
+
+  def approve!
+    CatRentalRequest.transaction do
+      self.status = 'APPROVED'
+      save
+
+      overlapping_pending_requests.each do |request|
+        request.status = 'DENIED'
+        request.save
+      end
+    end
+  end
+
+  def deny!
+    self.status = 'DENIED'
+  end
+
+  def no_approved_requests_may_overlap
+    if overlapping_approved_requests.any? && status == "APPROVED"
       errors.add(:status, "Your request conflicts with another approved rental.")
     end
   end
 
+  def overlapping_approved_requests
+    overlapping_requests.select { |request| request.status == 'APPROVED' }
+  end
+
+  def overlapping_pending_requests
+    overlapping_requests.select { |request| request.status == 'PENDING' }
+  end
+
   def overlapping_requests
-    id = @id.nil? ? 0 : @id
+    id = self.id.nil? ? 0 : self.id
 
     CatRentalRequest.find_by_sql ([<<-SQL, end_date, start_date, id])
       SELECT
