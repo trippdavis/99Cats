@@ -1,8 +1,8 @@
-<% if flash[:error] %>
-  <p> <%= flash[:error] %></p>
-<% end %>
-
 <form action=<%= cat_rental_requests_url %> method="post">
+  <input type="hidden"
+       name="authenticity_token"
+       value="<%= form_authenticity_token %>">
+
   <p>
     <label for="cats"><strong>Cats<strong></label>
     <br>

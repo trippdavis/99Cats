@@ -9,6 +9,7 @@ class CatRentalRequestsController < ApplicationController
   def create
     @request = CatRentalRequest.new(cat_request_params)
     @cats = Cat.all
+    @request.user_id = current_user.id if current_user
 
     if @request.save
       flash[:success] = "Cat request was successful."
