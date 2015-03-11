@@ -1,0 +1,33 @@
+<% if flash[:error] %>
+  <p> <%= flash[:error] %></p>
+<% end %>
+
+<form action=<%= cat_rental_requests_url %> method="post">
+  <p>
+    <label for="cats">Cats</label>
+    <br>
+    <select name="cat_rental_request[cat_id]" id="cats">
+      <option></option>
+      <% @cats.each do |cat| %>
+        <option value=<%= cat.id %> <%= 'selected' if cat.id == @request.cat_id %>><%= cat.name %></option>
+      <% end %>
+    </select>
+  </p>
+
+  <p>
+    <label>Start Date
+      <br>
+      <input type="date" name="cat_rental_request[start_date]" value=<%= @request.start_date %>>
+    </label>
+  </p>
+
+  <p>
+    <label>End Date
+      <br>
+      <input type="date" name="cat_rental_request[end_date]" value=<%= @request.end_date %>>
+    </label>
+  </p>
+
+  <input type="submit" value='Submit Request'>
+
+</form>

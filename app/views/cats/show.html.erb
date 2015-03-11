@@ -20,3 +20,12 @@
     <td><%= @cat.description %></td>
   </tr>
 </table>
+
+<p>
+  <h4>Requests for <%= @cat.name %>:</h4>
+  <ul>
+    <%  @cat.sorted_requests.each do |request| %>
+      <li> <%= request.start_date %> : <%= request.end_date %> </li>
+    <% end %>
+  </ul>
+</p>

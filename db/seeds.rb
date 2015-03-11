@@ -19,3 +19,33 @@ Cat.create(
   gender: 'M',
   description: 'Kind of sucks'
 )
+CatRentalRequest.create(
+  cat_id: 1,
+  start_date: Date.new(2015, 3, 10),
+  end_date: Date.new(2015, 3, 20),
+  status: 'APPROVED'
+)
+CatRentalRequest.create(
+  cat_id: 1,
+  start_date: Date.new(2015, 3, 15),
+  end_date: Date.new(2015, 3, 30),
+  status: 'PENDING'
+)
+CatRentalRequest.create(
+  cat_id: 1,
+  start_date: Date.new(2015, 3, 5),
+  end_date: Date.new(2015, 3, 7),
+  status: 'APPROVED'
+)
+CatRentalRequest.create(
+  cat_id: 1,
+  start_date: Date.new(2015, 4, 10),
+  end_date: Date.new(2015, 4, 20),
+  status: 'DENIED'
+)
+CatRentalRequest.create(
+  cat_id: 1,
+  start_date: Date.new(2015, 3, 10),
+  end_date: Date.new(2015, 4, 10),
+  status: 'DENIED'
+)
