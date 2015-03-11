@@ -16,7 +16,7 @@ class CatRentalRequest < ActiveRecord::Base
 
   def overlapping_approved_requests
     if (overlapping_requests.any?{ |request| request.status == 'APPROVED' }) && status == "APPROVED"
-      errors.add(:status, "can't conflict with another approved rental")
+      errors.add(:status, "Your request conflicts with another approved rental.")
     end
   end
 
