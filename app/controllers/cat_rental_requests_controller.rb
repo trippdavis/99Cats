@@ -1,4 +1,6 @@
 class CatRentalRequestsController < ApplicationController
+  before_action :redirect_unless_cat_owner!, only: [:approve, :deny]
+
   def new
     @request = CatRentalRequest.new
     @cats = Cat.all

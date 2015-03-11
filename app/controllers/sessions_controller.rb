@@ -13,8 +13,8 @@ class SessionsController < ApplicationController
 
     if @user.nil?
       @hide_login_button = true
-      flash.now[:error] = "Wrong Credentials"
-      render :new
+      flash[:error] = "Wrong Credentials"
+      redirect_to new_session_url
     else
       login!(@user)
       flash[:success] = "Login successful"

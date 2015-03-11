@@ -18,4 +18,9 @@ class ApplicationController < ActionController::Base
   def redirect_current_user
     redirect_to cats_url unless current_user.nil?
   end
+
+  def redirect_unless_cat_owner!
+    @cat = Cat.find(params[:id])
+    redirect_to cats_url unless @cat.user_id == current_user.id
+  end
 end
