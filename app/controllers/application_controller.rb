@@ -6,8 +6,7 @@ class ApplicationController < ActionController::Base
 
   def login!(user)
     @current_user = user
-    user.reset_session_token!
-    session[:session_token] = user.session_token
+    session[:session_token] = Session.create_session(user.id).session_token
   end
 
   def current_user
@@ -22,5 +21,10 @@ class ApplicationController < ActionController::Base
   def redirect_unless_cat_owner!
     @cat = Cat.find(params[:id])
     redirect_to cats_url unless @cat.user_id == current_user.id
+  end
+
+  def logout!
+    current_session = Session.find_by_session_token(session[:session_token])
+    current_session.destroy
   end
 end
